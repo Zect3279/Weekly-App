@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Clock from '@/views/Clock.vue'
+import Watch from '@/views/Watch.vue'
 
 Vue.use(VueRouter)
 
@@ -9,6 +11,16 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/clock',
+    name: 'Clock',
+    component: Clock
+  },
+  {
+    path: '/watch',
+    name: 'Watch',
+    component: Watch
   },
   {
     path: '/about',
