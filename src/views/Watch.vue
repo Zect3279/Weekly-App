@@ -85,6 +85,7 @@ export default {
     //
   },
   data: () => ({
+    nowWatch: false,
     firstT: null,
     TT: '00:00:00:00',
     dTT: 0,
@@ -97,8 +98,10 @@ export default {
   }),
   methods: {
     Start () {
+      if (this.nowWatch) { return }
       this.firstT = new Date()
       this.TTInterval = setInterval(() => {
+        this.nowWatch = true
         const nowT = new Date()
         this.dTT = (nowT - this.firstT) + this.baseMT
         const mili = Math.floor(this.dTT) % 1000
@@ -146,11 +149,13 @@ export default {
     Stop () {
       clearInterval(this.TTInterval)
       this.TTInterval = null
+      this.nowWatch = false
       this.baseMT = this.dTT
     },
     Reset () {
       clearInterval(this.TTInterval)
       this.TTInterval = null
+      this.nowWatch = false
       this.baseMT = 0
       this.TT = '00:00:00:00'
     }
