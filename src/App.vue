@@ -35,7 +35,8 @@ export default {
   data: () => ({
     links: [
       'Home',
-      'Clock'
+      'Normal Clock',
+      'Random Clock'
     ]
   }),
   methods: {
@@ -44,8 +45,11 @@ export default {
         case 'Home':
           this.$router.push('/')
           break
-        case 'Clock':
+        case 'Normal Clock':
           this.$router.push('/clock')
+          break
+        case 'Random Clock':
+          this.$router.push('/random')
           break
         default:
           break

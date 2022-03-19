@@ -43,21 +43,9 @@ export default {
     Start () {
       this.TTInterval = setInterval(() => {
         const TT = new Date()
-        var MST = 0
         var ST = 0
         var MT = 0
         var HT = 0
-        switch (String(TT.getMilliseconds()).length) {
-          case 1:
-            MST = String('00' + TT.getMilliseconds())
-            break
-          case 2:
-            MST = String('0' + TT.getMilliseconds())
-            break
-          default:
-            MST = String(TT.getMilliseconds())
-            break
-        }
         switch (String(TT.getSeconds()).length) {
           case 1:
             ST = String('0' + TT.getSeconds())
@@ -82,7 +70,7 @@ export default {
             HT = String(TT.getHours())
             break
         }
-        this.nowT = `${HT}:${MT}:${ST}:${MST.substring(0, 2)}`
+        this.nowT = `${HT}:${MT}:${ST}`
       }, 10)
     },
     Stop () {
