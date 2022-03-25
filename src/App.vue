@@ -4,7 +4,7 @@
       <router-view/>
     </v-main>
   <v-footer
-    color="primary lighten-1"
+    color="green darken-1"
     padless
   >
     <v-row

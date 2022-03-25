@@ -15,6 +15,9 @@ export default new Vuex.Store({
     addNum (state, payload) {
       state.itemList[payload.id].count += 1
     },
+    changeNum (state, payload) {
+      state.itemList[payload.id].count += Number(payload.diff)
+    },
     resetNum (state, payload) {
       state.itemList[payload.id].count = 0
     },
@@ -27,6 +30,9 @@ export default new Vuex.Store({
     },
     changeList (state, payload) {
       state.itemList = payload.itemList
+    },
+    deleteList (state, payload) {
+      delete state.itemList[payload.id]
     }
   },
   actions: {

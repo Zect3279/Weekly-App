@@ -13,7 +13,7 @@
             <v-list-item-group
               v-model="selectItem"
               mandatory
-              color="indigo"
+              color="light-green darken-3"
             >
               <v-list-item
                 v-for="(item, i) in itemList"
@@ -27,6 +27,12 @@
                 <v-list-item-content>
                   <v-list-item-title v-text="item.name" />
                 </v-list-item-content>
+
+                <v-list-item-action>
+                  <v-btn icon @click="Deelete(item.id)">
+                    <v-icon color="grey lighten-1">mdi-delete</v-icon>
+                  </v-btn>
+                </v-list-item-action>
               </v-list-item>
               <v-list-item
                 @click="AddDialog = true"
@@ -56,14 +62,80 @@
             sm="8"
           >
             <v-btn
+              dark
               block
               class="ma-1"
-              color="info"
-              @click="Coount"
+              color="blue darken-1"
+              @click="Coount(1)"
             >
-              Add
+              +1
             </v-btn>
           </v-col>
+        </v-row>
+
+        <v-row class="text-center" justify="center">
+          <v-col
+            cols="12"
+            sm="4"
+          >
+            <v-btn
+              dark
+              block
+              class="ma-1"
+              color="green darken-2"
+              @click="Coount(5)"
+            >
+              +5
+            </v-btn>
+          </v-col>
+          <v-col
+            cols="12"
+            sm="4"
+          >
+            <v-btn
+              dark
+              block
+              class="ma-1"
+              color="green darken-2"
+              @click="Coount(10)"
+            >
+              +10
+            </v-btn>
+          </v-col>
+        </v-row>
+
+        <v-row class="text-center" justify="center">
+          <v-col
+            cols="12"
+            sm="4"
+          >
+            <v-btn
+              dark
+              block
+              class="ma-1"
+              color="orange darken-1"
+              @click="Coount(-1)"
+            >
+              -1
+            </v-btn>
+          </v-col>
+          <v-col
+            cols="12"
+            sm="4"
+          >
+            <v-btn
+              dark
+              block
+              class="ma-1"
+              color="orange darken-1"
+              @click="Coount(-5)"
+            >
+              -5
+            </v-btn>
+          </v-col>
+        </v-row>
+
+        <v-row class="text-center" justify="center">
           <v-col
             cols="12"
             sm="8"
@@ -217,7 +289,7 @@ export default {
     diaName: '',
     selectItem: 0,
     idUsing: '',
-    countNumber: 0
+    countNumber: 'null'
   }),
   methods: {
     Saave () {
@@ -228,15 +300,30 @@ export default {
       this.token = token
       this.saveDialog = true
     },
-    Coount () {
-      this.$store.commit('addNum', { id: this.idUsing })
-      this.countNumber = this.itemList[this.idUsing].count
+    Coount (diff) {
+      if (!this.idUsing) {
+        this.AddDialog = true
+      } else {
+        this.$store.commit('changeNum', { id: this.idUsing, diff: diff })
+        this.countNumber = this.itemList[this.idUsing].count
+      }
     },
     Seelect (id) {
       this.idUsing = id
       const keyList = Object.keys(this.itemList)
       this.selectItem = keyList.indexOf(id) + 1
       this.countNumber = this.itemList[id].count
+    },
+    Deelete (id) {
+      this.countNumber = 0
+      this.$store.commit('deleteList', { id: id })
+      console.log(this.itemList)
+      if (!this.itemList) {
+        this.countNumber = 'null'
+        this.AddDialog = true
+      } else {
+        this.Seelect(Object.keys(this.itemList)[0])
+      }
     },
     Reeset () {
       this.$store.commit('resetNum', { id: this.idUsing })
