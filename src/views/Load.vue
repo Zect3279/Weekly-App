@@ -26,7 +26,7 @@
         class="ma-1"
         :loading="loading"
         :disabled="loading"
-        color="green darken-2"
+        color="blue darken-2"
         dark
         @click="loadToken(); loader = 'loading'"
       >

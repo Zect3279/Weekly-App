@@ -3,7 +3,7 @@
     <v-row class="text-center">
       <v-col class="mb-4">
         <h1 class="display-2 font-weight-bold mt-16 mb-3">
-          Counter +
+          Timer
         </h1>
       </v-col>
 
@@ -15,7 +15,7 @@
           <v-btn
             dark
             min-width="400px"
-            color="green darken-2"
+            color="blue darken-2"
             @click="startCount"
           >
             Start
@@ -25,7 +25,7 @@
           <v-btn
             dark
             min-width="400px"
-            color="green darken-2"
+            color="blue darken-2"
             @click="load"
           >
             Load

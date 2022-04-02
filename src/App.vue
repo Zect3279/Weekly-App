@@ -4,7 +4,7 @@
       <router-view/>
     </v-main>
   <v-footer
-    color="green darken-1"
+    color="blue darken-1"
     padless
   >
     <v-row
@@ -35,7 +35,7 @@ export default {
   data: () => ({
     links: [
       'Home',
-      'Count',
+      'Timer',
       'Load'
     ]
   }),
@@ -45,7 +45,7 @@ export default {
         case 'Home':
           this.$router.push('/')
           break
-        case 'Count':
+        case 'Timer':
           this.$router.push('/count')
           break
         case 'Load':
