@@ -1,20 +1,24 @@
-# Weekly-App
-週一クソアプリチャレンジ
+# 005-counterplus
 
-# MEMO
-アプリを作ったらnavとcardを作る
+## Project setup
+```
+npm install
+```
 
-# アイデア一覧
-- [ ] ベースのVue.jsプロジェクト
-- [ ] タイマー（任意の時間, 1, 3, 5, 10分）
-- [ ] 任意の数字をランダムで2,5,8,10,16進数に変換
-- [ ] ランダムタイマー
-- [ ] 文字数を表示するメモ帳
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
-# 作ったもの
-- [x] アプリ一覧
-- [x] ビンゴ用ルーレット
-- [x] ストップウォッチ
-- [x] 時計(日本時間)
-- [x] カウンター
-- [x] カウンター Plus
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
