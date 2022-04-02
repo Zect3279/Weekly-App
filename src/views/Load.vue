@@ -73,6 +73,7 @@ export default {
       const decoded = jwt.verify(this.token, process.env.VUE_APP_JWT_secret)
       try {
         this.$store.commit('changeList', { itemList: decoded.itemList })
+        console.log(decoded.itemList)
         this.$router.push('/count')
       } catch (error) {
         this.errorCameUp = true

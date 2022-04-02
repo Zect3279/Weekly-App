@@ -66,9 +66,25 @@
               block
               class="ma-1"
               color="blue darken-1"
-              @click="Coount(1)"
+              :disabled="onTimer"
+              @click="Sttart"
             >
-              +1
+              Start
+            </v-btn>
+          </v-col>
+          <v-col
+            cols="12"
+            sm="8"
+          >
+            <v-btn
+              dark
+              block
+              class="ma-1"
+              color="orange darken-1"
+              :disabled="!onTimer"
+              @click="Paause"
+            >
+              Stop
             </v-btn>
           </v-col>
         </v-row>
@@ -76,61 +92,16 @@
         <v-row class="text-center" justify="center">
           <v-col
             cols="12"
-            sm="4"
+            sm="6"
           >
             <v-btn
               dark
               block
               class="ma-1"
               color="green darken-2"
-              @click="Coount(5)"
+              @click="EditDialog = true"
             >
-              +5
-            </v-btn>
-          </v-col>
-          <v-col
-            cols="12"
-            sm="4"
-          >
-            <v-btn
-              dark
-              block
-              class="ma-1"
-              color="green darken-2"
-              @click="Coount(10)"
-            >
-              +10
-            </v-btn>
-          </v-col>
-        </v-row>
-
-        <v-row class="text-center" justify="center">
-          <v-col
-            cols="12"
-            sm="4"
-          >
-            <v-btn
-              dark
-              block
-              class="ma-1"
-              color="orange darken-1"
-              @click="Coount(-1)"
-            >
-              -1
-            </v-btn>
-          </v-col>
-          <v-col
-            cols="12"
-            sm="4"
-          >
-            <v-btn
-              dark
-              block
-              class="ma-1"
-              color="orange darken-1"
-              @click="Coount(-5)"
-            >
-              -5
+              Edit
             </v-btn>
           </v-col>
         </v-row>
@@ -232,18 +203,38 @@
           </v-card-title>
 
           <v-card-text>
-            Enter the Name of Counter
+            Enter the Time of Counter
           </v-card-text>
           <v-form>
             <v-container>
               <v-row justify="center">
                 <v-col
                   cols="12"
-                  sm="11"
+                  sm="3"
                 >
                   <v-text-field
-                    v-model="diaName"
-                    label="Name"
+                    v-model="diaH"
+                    label="Hour"
+                    filled
+                  ></v-text-field>
+                </v-col>
+                <v-col
+                  cols="12"
+                  sm="3"
+                >
+                  <v-text-field
+                    v-model="diaM"
+                    label="Minute"
+                    filled
+                  ></v-text-field>
+                </v-col>
+                <v-col
+                  cols="12"
+                  sm="3"
+                >
+                  <v-text-field
+                    v-model="diaS"
+                    label="Second"
                     filled
                   ></v-text-field>
                 </v-col>
@@ -257,6 +248,69 @@
               color="green darken-1"
               text
               @click="AddItem"
+            >
+              OK
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-row>
+    <v-row justify="center">
+      <v-dialog
+        v-model="EditDialog"
+        max-width="450"
+      >
+        <v-card>
+          <v-card-title class="text-h5">
+            Edit Counter
+          </v-card-title>
+
+          <v-card-text>
+            Enter the Time of Counter
+          </v-card-text>
+          <v-form>
+            <v-container>
+              <v-row justify="center">
+                <v-col
+                  cols="12"
+                  sm="3"
+                >
+                  <v-text-field
+                    v-model="diaH"
+                    label="Hour"
+                    filled
+                  ></v-text-field>
+                </v-col>
+                <v-col
+                  cols="12"
+                  sm="3"
+                >
+                  <v-text-field
+                    v-model="diaM"
+                    label="Minute"
+                    filled
+                  ></v-text-field>
+                </v-col>
+                <v-col
+                  cols="12"
+                  sm="3"
+                >
+                  <v-text-field
+                    v-model="diaS"
+                    label="Second"
+                    filled
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-form>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="green darken-1"
+              text
+              @click="Eddit"
             >
               OK
             </v-btn>
@@ -285,13 +339,27 @@ export default {
     numList: [], // 全体
     saveDialog: false, // 状態保存用ダイアログ
     AddDialog: false,
+    EditDialog: false,
     token: '', // JWTトークン
     diaName: '',
+    diaH: '',
+    diaM: '',
+    diaS: '',
     selectItem: 0,
     idUsing: '',
-    countNumber: 'null'
+    countNumber: 'null',
+    countSecond: 0,
+    TTInterval: null,
+    onTimer: false
   }),
   methods: {
+    Eddit () {
+      this.EditDialog = false
+      console.log(`${this.diaH}:${this.diaM}:${this.diaS}`)
+      this.diaH = ''
+      this.diaM = ''
+      this.diaS = ''
+    },
     Saave () {
       // JWT使って状態を保存
       const token = jwt.sign({
@@ -308,12 +376,6 @@ export default {
         this.countNumber = this.itemList[this.idUsing].count
       }
     },
-    Seelect (id) {
-      this.idUsing = id
-      const keyList = Object.keys(this.itemList)
-      this.selectItem = keyList.indexOf(id) + 1
-      this.countNumber = this.itemList[id].count
-    },
     Deelete (id) {
       this.countNumber = 0
       this.$store.commit('deleteList', { id: id })
@@ -326,15 +388,77 @@ export default {
       }
     },
     Reeset () {
+      clearInterval(this.TTInterval)
       this.$store.commit('resetNum', { id: this.idUsing })
-      this.countNumber = this.itemList[this.idUsing].count
+      this.countSecond = this.itemList[this.idUsing].default
+      this.Fiix()
+    },
+    Paause () {
+      clearInterval(this.TTInterval)
+      this.Fiix()
+      this.onTimer = false
     },
     AddItem () {
+      console.log(`${this.diaH}:${this.diaM}:${this.diaS}`)
+      const count = Number(this.diaS) + (Number(this.diaM) * 60) + (Number(this.diaH) * 3600)
       const id = uuidv4()
-      this.$store.commit('addItem', { id, name: this.diaName })
-      this.diaName = ''
+      this.diaName = `${this.diaH || '0'}hr ${this.diaM || '0'}min ${this.diaS || '0'}sec`
+      this.$store.commit('addItem', { id, name: this.diaName, count })
       this.AddDialog = false
       this.Seelect(id)
+      this.diaH = ''
+      this.diaM = ''
+      this.diaS = ''
+      this.diaName = ''
+    },
+    Seelect (id) {
+      this.idUsing = id
+      const keyList = Object.keys(this.itemList)
+      this.selectItem = keyList.indexOf(id) + 1
+      this.countSecond = this.itemList[id].count
+      this.Fiix()
+    },
+    Sttart () {
+      if (!this.idUsing) {
+        this.AddDialog = true
+        return
+      }
+      this.onTimer = true
+      this.TTInterval = setInterval(() => {
+        this.countSecond -= 1
+        this.Fiix()
+        this.$store.commit('changeNum', { id: this.idUsing, diff: -1 })
+        if (this.countSecond <= 0) {
+          clearInterval(this.TTInterval)
+        }
+      }, 1000)
+    },
+    Fiix () {
+      var ST = this.countSecond % 60
+      var MT = Math.floor(this.countSecond % 3600 / 60)
+      var HT = Math.floor(this.countSecond / 3600)
+      switch (String(ST).length) {
+        case 1:
+          ST = String('0' + ST)
+          break
+        default:
+          break
+      }
+      switch (String(MT).length) {
+        case 1:
+          MT = String('0' + MT)
+          break
+        default:
+          break
+      }
+      switch (String(HT).length) {
+        case 1:
+          HT = String('0' + HT)
+          break
+        default:
+          break
+      }
+      this.countNumber = `${HT}:${MT}:${ST}`
     }
   }
 }
