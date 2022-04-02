@@ -402,7 +402,10 @@ export default {
       console.log(`${this.diaH}:${this.diaM}:${this.diaS}`)
       const count = Number(this.diaS) + (Number(this.diaM) * 60) + (Number(this.diaH) * 3600)
       const id = uuidv4()
-      this.diaName = `${this.diaH || '0'}hr ${this.diaM || '0'}min ${this.diaS || '0'}sec`
+      this.diaH = (this.diaH ? `${this.diaH}hr ` : '')
+      this.diaM = (this.diaM ? `${this.diaM}min ` : '')
+      this.diaS = (this.diaS ? `${this.diaS}sec` : '')
+      this.diaName = `${this.diaH}${this.diaM}${this.diaS}`
       this.$store.commit('addItem', { id, name: this.diaName, count })
       this.AddDialog = false
       this.Seelect(id)
