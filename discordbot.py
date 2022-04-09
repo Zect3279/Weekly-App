@@ -58,37 +58,37 @@ def geneCon(tempCon: str):
 
 
 @bot.tree.command()
-async def add(interaction: discord.Interaction, Channel: discord.TextChannel):
+async def add(interaction: discord.Interaction, channel: discord.TextChannel):
   if not interaction.user.guild_permissions.manage_channels:
     return
   permissionChannel = await permission_collection.find_one({
     "guildID": interaction.guild_id,
-    "channelID": Channel.id
+    "channelID": channel.id
   }, {
       "_id": False
   })
   if permissionChannel:
-    await interaction.response.send_message(f'{Channel.mention} は既に登録されています。', ephemral=True)
+    await interaction.response.send_message(f'{channel.mention} は既に登録されています。', ephemral=True)
     return
   await permission_collection.insert_one({
     "guildID": interaction.guild_id,
-    "channelID": Channel.id
+    "channelID": channel.id
   })
-  await interaction.response.send_message(f'{Channel.mention} が対象に追加されました。', ephemral=True)
+  await interaction.response.send_message(f'{channel.mention} が対象に追加されました。', ephemral=True)
   return
 
 @bot.tree.command()
-async def remove(interaction: discord.Interaction, Channel: discord.TextChannel):
+async def remove(interaction: discord.Interaction, channel: discord.TextChannel):
   if not interaction.user.guild_permissions.manage_channels:
     return
   result = await permission_collection.delete_one({
     "guildID": interaction.guild_id,
-    "channelID": Channel.id
+    "channelID": channel.id
   })
   if result.deleted_count == 0:
     await interaction.response.send_message('対象に存在しません。', ephemral=True)
     return
-  await interaction.response.send_message(f"{Channel.mention} が対象から削除されました。", ephemral=True)
+  await interaction.response.send_message(f"{channel.mention} が対象から削除されました。", ephemral=True)
   return
 
 token = getenv('DISCORD_BOT_TOKEN')
