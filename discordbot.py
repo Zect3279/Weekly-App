@@ -29,6 +29,7 @@ async def on_message(message: discord.Message):
   channels = geneCon(cont[0])
   for c in channels:
     permissionChannel = await permission_collection.find_one({
+    "guildID": message.guild.id,
       "channelID": c
     }, {
         "_id": False
@@ -55,6 +56,7 @@ def geneCon(tempCon: str):
 async def add(interaction: discord.Interaction, Channel: discord.TextChannel):
   if not interaction.user.guild_permissions.manage_channels: return
   permissionChannel = await permission_collection.find_one({
+    "guildID": interaction.guild_id,
     "channelID": Channel.id
   }, {
       "_id": False
@@ -63,6 +65,7 @@ async def add(interaction: discord.Interaction, Channel: discord.TextChannel):
     await interaction.response.send_message(f'{Channel.mention} は既に登録されています。', ephemral=True)
     return
   await permission_collection.insert_one({
+    "guildID": interaction.guild_id,
     "channelID": Channel.id
   })
   await interaction.response.send_message(f'{Channel.mention} が対象に追加されました。', ephemral=True)
@@ -72,6 +75,7 @@ async def add(interaction: discord.Interaction, Channel: discord.TextChannel):
 async def remove(interaction: discord.Interaction, Channel: discord.TextChannel):
   if not interaction.user.guild_permissions.manage_channels: return
   result = await permission_collection.delete_one({
+    "guildID": interaction.guild_id,
     "channelID": Channel.id
   })
   if result.deleted_count == 0:
