@@ -29,7 +29,7 @@ async def on_message(message: discord.Message):
   channels = geneCon(cont[0])
   for c in channels:
     permissionChannel = await permission_collection.find_one({
-    "guildID": message.guild.id,
+      "guildID": message.guild.id,
       "channelID": c
     }, {
         "_id": False
