@@ -32,7 +32,8 @@ async def on_message(message: discord.Message):
     permissionChannel = await permission_collection.find_one({
       "guildID": message.guild.id,
       "channelID": c
-    }, {
+    },
+    {
         "_id": False
     })
     if not permissionChannel:
