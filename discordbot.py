@@ -7,12 +7,6 @@ from motor import motor_asyncio as motor
 bot = discord.Client(intents=discord.Intents.all())
 bot.tree = app_commands.CommandTree(bot)
 
-Mongo_USER = getenv('MONGO_USER')
-Mongo_pass = getenv('MONGO_PASS')
-dbclient = motor.AsyncIOMotorClient(f"mongodb+srv://{Mongo_USER}:{Mongo_pass}@cluster0.kg9vt.mongodb.net/HashHash?retryWrites=true&w=majority")
-db = dbclient["ProfileBot"]
-permission_collection = db.perm
-
 @bot.event
 async def on_ready():
   await bot.tree.sync()
@@ -29,15 +23,6 @@ async def on_message(message: discord.Message):
     return
   channels = geneCon(cont[0])
   for c in channels:
-    permissionChannel = await permission_collection.find_one({
-      "guildID": message.guild.id,
-      "channelID": c
-    },
-    {
-        "_id": False
-    })
-    if not permissionChannel:
-      continue
     channel = bot.get_channel(int(c))
     if not channel:
       continue
@@ -56,40 +41,6 @@ def geneCon(tempCon: str):
     channels.append(int(cID))
   return channels
 
-
-@bot.tree.command()
-async def add(interaction: discord.Interaction, channel: discord.TextChannel):
-  if not interaction.user.guild_permissions.manage_channels:
-    return
-  permissionChannel = await permission_collection.find_one({
-    "guildID": interaction.guild_id,
-    "channelID": channel.id
-  }, {
-      "_id": False
-  })
-  if permissionChannel:
-    await interaction.response.send_message(f'{channel.mention} は既に登録されています。', ephemral=True)
-    return
-  await permission_collection.insert_one({
-    "guildID": interaction.guild_id,
-    "channelID": channel.id
-  })
-  await interaction.response.send_message(f'{channel.mention} が対象に追加されました。', ephemral=True)
-  return
-
-@bot.tree.command()
-async def remove(interaction: discord.Interaction, channel: discord.TextChannel):
-  if not interaction.user.guild_permissions.manage_channels:
-    return
-  result = await permission_collection.delete_one({
-    "guildID": interaction.guild_id,
-    "channelID": channel.id
-  })
-  if result.deleted_count == 0:
-    await interaction.response.send_message('対象に存在しません。', ephemral=True)
-    return
-  await interaction.response.send_message(f"{channel.mention} が対象から削除されました。", ephemral=True)
-  return
 
 token = getenv('DISCORD_BOT_TOKEN')
 bot.run(token)
