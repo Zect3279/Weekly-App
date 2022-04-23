@@ -19,7 +19,14 @@
             v-model="textVal"
           ></v-textarea>
         </v-col>
-        <v-col cols="4">
+        <v-col
+          cols="12"
+          xs="10"
+          sm="8"
+          md="4"
+          lg="3"
+          xl="2"
+        >
           <v-card elevation="1">
 
             <v-list subheader>
