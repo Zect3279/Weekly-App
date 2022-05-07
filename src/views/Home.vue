@@ -23,7 +23,7 @@
             v-for="n in numList"
             v-bind:key="n"
             class="ma-2 chosenList pa-4"
-            :color="plessed.includes(n) ? 'grey lighten-1' : 'light-blue accent-2'"
+            :color="plessed.includes(n) ? 'grey lighten-1' : hard ? 'green accent-2' : 'light-blue accent-2'"
             @click="puush(n)"
             :disabled="plessed.includes(n)"
           >
