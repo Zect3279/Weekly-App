@@ -15,7 +15,7 @@
           color="blue-grey"
           dark
         >
-          <v-toolbar-title>Chip - Tap</v-toolbar-title>
+          <v-toolbar-title>Chip - Tap 2</v-toolbar-title>
         </v-toolbar>
 
         <v-card-text class="text-center">
@@ -23,11 +23,16 @@
             v-for="n in numList"
             v-bind:key="n"
             class="ma-2 chosenList pa-4"
-            :color="plessed.includes(n) ? 'grey lighten-1' : hard ? 'green accent-2' : 'light-blue accent-2'"
+            :color="active.includes(n) ? hard ? 'green accent-2' : 'light-blue accent-2' : 'grey lighten-1'"
             @click="puush(n)"
-            :disabled="plessed.includes(n)"
           >
             {{ n }}
+            <!-- <v-icon v-if="plessed.includes(n)">
+              mdi-minus
+            </v-icon>
+            <v-icon v-else>
+              mdi-plus
+            </v-icon> -->
           </v-chip>
         </v-card-text>
 
@@ -40,7 +45,7 @@
   >
     <v-col class="mb-4">
       <h1 class="display-2 font-weight-bold mt-16 mb-3">
-        Chip Tap
+        Chip Tap 2
       </h1>
     </v-col>
 
@@ -123,11 +128,11 @@
     >
       <v-card>
         <v-card-title class="text-h5">
-          クリア！
+          GAME OVER
         </v-card-title>
 
         <v-card-text>
-          あめでとう！
+          またチャレンジしてね
         </v-card-text>
 
         <v-card-actions>
@@ -161,16 +166,18 @@ export default {
     hard: false,
     dialog: false,
     numList: [],
-    plessed: []
+    active: [],
+    acctivator: null
   }),
   methods: {
     sttart (count) {
       console.log(`start: ${count}`)
       this.makeNumList(count)
       this.onGame = true
+      this.acctivator = setInterval(this.acctiveChip, 700)
     },
     makeNumList (count) {
-      this.plessed = []
+      this.active = []
       const nums = [...Array(count).keys()].map(i => ++i)
       this.numList = nums
         .map(value => ({ value, sort: Math.random() }))
@@ -178,20 +185,14 @@ export default {
         .map(({ value }) => value)
     },
     puush (num) {
-      if (!this.plessed.length && num === 1) {
-        this.plessed.push(num)
-        return
+      if (this.active.includes(num)) {
+        const newAct = this.active.filter(n => n !== num)
+        this.active = newAct
       }
-      const sorts = this.sortList(this.plessed)
-      const nextN = sorts[0] + 1
-      if (num !== nextN) {
-        return
-      }
-      this.plessed.push(num)
     },
     reeset () {
       this.numList = []
-      this.plessed = []
+      this.active = []
     },
     sortList (list) {
       const back = list.sort(function (first, second) {
@@ -204,10 +205,18 @@ export default {
         }
       })
       return back
+    },
+    acctiveChip () {
+      const diff = this.numList.filter(i => this.active.indexOf(i) === -1)
+      const pusher = diff
+        .map(value => ({ value, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ value }) => value)
+      this.active.push(pusher[0])
     }
   },
   watch: {
-    plessed () {
+    active () {
       if (this.hard) {
         const nums = this.numList
         this.numList = nums
@@ -215,11 +224,10 @@ export default {
           .sort((a, b) => a.sort - b.sort)
           .map(({ value }) => value)
       }
-      const diff = this.numList.filter(n => this.plessed.indexOf(n) === -1)
-      if (diff.length) {
-        return
+      if (this.numList.length === this.active.length) {
+        this.dialog = true
+        clearInterval(this.acctivator)
       }
-      this.dialog = true
     }
   }
 }
