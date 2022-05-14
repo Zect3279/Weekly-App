@@ -26,13 +26,12 @@
             :color="active.includes(n) ? hard ? 'green accent-2' : 'light-blue accent-2' : 'grey lighten-1'"
             @click="puush(n)"
           >
-            {{ n }}
-            <!-- <v-icon v-if="plessed.includes(n)">
-              mdi-minus
+            <v-icon v-if="active.includes(n)">
+              mdi-plus
             </v-icon>
             <v-icon v-else>
-              mdi-plus
-            </v-icon> -->
+              mdi-minus
+            </v-icon>
           </v-chip>
         </v-card-text>
 
