@@ -1,3 +1,6 @@
 git+https://github.com/Rapptz/discord.py
 motor
 dnspython
+beautifulsoup4
+requests
+lxml
