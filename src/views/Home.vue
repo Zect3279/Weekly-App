@@ -136,8 +136,8 @@ export default {
   methods: {
     sttart (count) {
       console.log(`start: ${count}`)
-      // this.makeNumList(count)
-      this.makeNumList(3)
+      this.makeNumList(count)
+      // this.makeNumList(3)
       this.setQA()
       this.onGame = true
     },
@@ -149,7 +149,7 @@ export default {
       this.base = Number(rawList[1])
       const base = parseInt(this.answer, 10)
       this.question = base.toString(this.base)
-      console.log(this.answer)
+      // console.log(this.answer)
     },
     makeNumList (count) {
       this.plessed = []
