@@ -15,20 +15,24 @@
           color="blue-grey"
           dark
         >
-          <v-toolbar-title>Chip - Tap</v-toolbar-title>
+          <v-toolbar-title>Base Game</v-toolbar-title>
         </v-toolbar>
+
+        <v-card-text>
+          <p class="mt-5 text-center font-weight-bold display-1" v-text="`${base}進数`" />
+          <p class="mt-5 text-center font-weight-bold display-3" v-text="question" />
+        </v-card-text>
 
         <v-card-text class="text-center">
           <v-chip
-            v-for="n in numList"
+            v-for="n in chipList"
             v-bind:key="n"
             class="ma-2 chosenList pa-4"
             :color="plessed.includes(n) ? 'grey lighten-1' : hard ? 'green accent-2' : 'light-blue accent-2'"
             @click="puush(n)"
             :disabled="plessed.includes(n)"
-          >
-            {{ n }}
-          </v-chip>
+            v-text="n"
+          />
         </v-card-text>
 
       </v-card>
@@ -40,7 +44,7 @@
   >
     <v-col class="mb-4">
       <h1 class="display-2 font-weight-bold mt-16 mb-3">
-        Chip Tap
+        Base Game
       </h1>
     </v-col>
 
@@ -48,9 +52,6 @@
       class="mb-5"
       cols="12"
     >
-      <h2 class="font-weight-bold mt-8 mb-3" style="color:#304FFE">
-        イージ モード
-      </h2>
       <v-btn
         class="ma-4"
         min-width="80px"
@@ -80,41 +81,6 @@
       </v-btn>
     </v-col>
 
-    <v-col
-      class="mb-5"
-      cols="12"
-    >
-      <h2 class="font-weight-bold mt-8 mb-3" style="color:#00C853">
-        ハード モード
-      </h2>
-      <v-btn
-        class="ma-4"
-        min-width="80px"
-        dark
-        color="green darken-1"
-        @click="sttart(10);hard=true"
-      >
-        10コ
-      </v-btn>
-      <v-btn
-        class="ma-4"
-        min-width="80px"
-        dark
-        color="green darken-1"
-        @click="sttart(30);hard=true"
-      >
-        30コ
-      </v-btn>
-      <v-btn
-        class="ma-4"
-        min-width="80px"
-        dark
-        color="green darken-1"
-        @click="sttart(50);hard=true"
-      >
-        50コ
-      </v-btn>
-    </v-col>
   </v-row>
   <v-row>
     <v-dialog
@@ -160,61 +126,67 @@ export default {
     onGame: false,
     hard: false,
     dialog: false,
+    chipList: [],
     numList: [],
-    plessed: []
+    plessed: [],
+    base: 0,
+    question: 0,
+    answer: 0
   }),
   methods: {
     sttart (count) {
       console.log(`start: ${count}`)
-      this.makeNumList(count)
+      // this.makeNumList(count)
+      this.makeNumList(3)
+      this.setQA()
       this.onGame = true
+    },
+    setQA () {
+      const diff = this.numList.filter(n => this.plessed.indexOf(n) === -1)
+      const raw = diff[Math.floor(Math.random() * diff.length)]
+      const rawList = raw.split(' ')
+      this.answer = Number(rawList[0])
+      this.base = Number(rawList[1])
+      const base = parseInt(this.answer, 10)
+      this.question = base.toString(this.base)
+      console.log(this.answer)
     },
     makeNumList (count) {
       this.plessed = []
       const nums = [...Array(count).keys()].map(i => ++i)
-      this.numList = nums
+      var quList = []
+      for (const n of nums) {
+        quList.push(`${n} 2`)
+        quList.push(`${n} 5`)
+        quList.push(`${n} 8`)
+        quList.push(`${n} 16`)
+      }
+      this.chipList = nums
+      this.numList = quList
         .map(value => ({ value, sort: Math.random() }))
         .sort((a, b) => a.sort - b.sort)
         .map(({ value }) => value)
     },
     puush (num) {
-      if (!this.plessed.length && num === 1) {
-        this.plessed.push(num)
-        return
-      }
-      const sorts = this.sortList(this.plessed)
-      const nextN = sorts[0] + 1
-      if (num !== nextN) {
-        return
-      }
-      this.plessed.push(num)
+      // 正解判定
+      if (num !== this.answer) { return }
+      this.plessed.push(`${num} ${this.base}`)
+      console.log(`⭕: ${this.answer}は${this.base}進数で${this.question}`)
+      const diff = this.numList.filter(n => this.plessed.indexOf(n) === -1)
+      if (!diff.length) { return }
+      this.setQA()
     },
     reeset () {
       this.numList = []
       this.plessed = []
-    },
-    sortList (list) {
-      const back = list.sort(function (first, second) {
-        if (first > second) {
-          return -1
-        } else if (first < second) {
-          return 1
-        } else {
-          return 0
-        }
-      })
-      return back
+      this.chipList = []
+      this.base = 0
+      this.question = 0
+      this.answer = 0
     }
   },
   watch: {
     plessed () {
-      if (this.hard) {
-        const nums = this.numList
-        this.numList = nums
-          .map(value => ({ value, sort: Math.random() }))
-          .sort((a, b) => a.sort - b.sort)
-          .map(({ value }) => value)
-      }
       const diff = this.numList.filter(n => this.plessed.indexOf(n) === -1)
       if (diff.length) {
         return
