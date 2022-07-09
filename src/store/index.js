@@ -5,30 +5,18 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    firstNumber: 1,
-    lastNumber: 10,
-    alreadyList: []
+    quList: [
+      'Hello World',
+      'console.log',
+      'array.prototype.pop'
+    ]
   },
   mutations: {
-    changeFNum (state, payload) {
-      //
-      state.firstNumber = payload.num
+    resetQU (state, payload) {
+      state.quList = []
     },
-    changeLNum (state, payload) {
-      //
-      state.lastNumber = payload.num
-    },
-    changeAList (state, payload) {
-      //
-      state.alreadyList = payload.AList
-    },
-    appendAList (state, payload) {
-      //
-      state.alreadyList.push(payload.num)
-    },
-    resetAList (state, payload) {
-      //
-      state.alreadyList = []
+    putQU (state, payload) {
+      state.quList = payload.qus
     }
   },
   actions: {

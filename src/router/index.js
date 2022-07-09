@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
-import Bingo from '@/views/Bingo.vue'
-import LoadBingo from '@/views/LoadBingo.vue'
+import Load from '@/views/Load.vue'
+import Sushida from '@/views/Sushida.vue'
 
 Vue.use(VueRouter)
 
@@ -13,14 +13,14 @@ const routes = [
     component: Home
   },
   {
-    path: '/bingo',
-    name: 'Bingo',
-    component: Bingo
+    path: '/sushida',
+    name: 'Sushida',
+    component: Sushida
   },
   {
     path: '/load',
-    name: 'LoadBingo',
-    component: LoadBingo
+    name: 'Load',
+    component: Load
   }
 ]
 

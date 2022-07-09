@@ -3,7 +3,7 @@
     <v-row class="text-center">
       <v-col class="mb-4">
         <h1 class="display-2 font-weight-bold mt-16 mb-3">
-          Bingo!!
+          Sushida
         </h1>
       </v-col>
 
@@ -28,7 +28,7 @@
             color="blue darken-1"
             @click="loadBingo"
           >
-            Load
+            Load & Edit
           </v-btn>
         </v-row>
       </v-col>
@@ -44,14 +44,12 @@ export default {
     //
   }),
   mounted: function () {
-    this.$store.commit('changeFNum', { num: 1 })
-    this.$store.commit('changeLNum', { num: 10 })
-    this.$store.commit('resetAList', {})
+    //
   },
   methods: {
     startBingo () {
       // console.log('start')
-      this.$router.push('/bingo')
+      this.$router.push('/sushida')
     },
     loadBingo () {
       // console.log('load')
