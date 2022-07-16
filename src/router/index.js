@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
 import Load from '@/views/Load.vue'
-import Sushida from '@/views/Sushida.vue'
+import Share from '@/views/Share.vue'
+import GetLink from '@/views/GetLink.vue'
 
 Vue.use(VueRouter)
 
@@ -13,9 +14,14 @@ const routes = [
     component: Home
   },
   {
-    path: '/sushida',
-    name: 'Sushida',
-    component: Sushida
+    path: '/share',
+    name: 'Share',
+    component: Share
+  },
+  {
+    path: '/get',
+    name: 'GetLink',
+    component: GetLink
   },
   {
     path: '/load',

@@ -5,18 +5,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    quList: [
-      'Hello World',
-      'console.log',
-      'array.prototype.pop'
-    ]
+    linkHolder: 'https://youtu.be/CC_2gvC8rJQ'
   },
   mutations: {
-    resetQU (state, payload) {
-      state.quList = []
-    },
-    putQU (state, payload) {
-      state.quList = payload.qus
+    putLink (state, payload) {
+      state.linkHolder = payload.link
     }
   },
   actions: {

@@ -3,7 +3,7 @@
     <v-row class="text-center">
       <v-col class="mb-4">
         <h1 class="display-2 font-weight-bold mt-16 mb-3">
-          Sushida
+          YouTube Link Share
         </h1>
       </v-col>
 
@@ -18,17 +18,7 @@
             color="blue darken-1"
             @click="startBingo"
           >
-            Start
-          </v-btn>
-        </v-row>
-        <v-row justify="center" class="my-5">
-          <v-btn
-            dark
-            min-width="400px"
-            color="blue darken-1"
-            @click="loadBingo"
-          >
-            Load & Edit
+            Let's share!
           </v-btn>
         </v-row>
       </v-col>
@@ -49,11 +39,7 @@ export default {
   methods: {
     startBingo () {
       // console.log('start')
-      this.$router.push('/sushida')
-    },
-    loadBingo () {
-      // console.log('load')
-      this.$router.push('/load')
+      this.$router.push('/share')
     }
   }
 }
