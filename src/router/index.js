@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
-import Bingo from '@/views/Bingo.vue'
-import LoadBingo from '@/views/LoadBingo.vue'
+import His from '@/views/His.vue'
 
 Vue.use(VueRouter)
 
@@ -13,14 +12,9 @@ const routes = [
     component: Home
   },
   {
-    path: '/bingo',
-    name: 'Bingo',
-    component: Bingo
-  },
-  {
-    path: '/load',
-    name: 'LoadBingo',
-    component: LoadBingo
+    path: '/his',
+    name: 'His',
+    component: His
   }
 ]
 

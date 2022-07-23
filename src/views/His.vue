@@ -1,6 +1,4 @@
 <template>
-  <v-app>
-    <v-main>
   <v-container>
     <v-row class="text-center">
       <v-col cols="12">
@@ -19,13 +17,11 @@
           color="info"
           @click="Shhow"
         >
-          確認
+          Show
         </v-btn>
       </v-col>
     </v-row>
   </v-container>
-    </v-main>
-  </v-app>
 </template>
 
 <script>
@@ -44,7 +40,7 @@ export default {
     //
   },
   data: () => ({
-    bingoNumber: '履歴数'
+    bingoNumber: ''
   }),
   methods: {
     Shhow () {
