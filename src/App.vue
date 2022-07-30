@@ -1,29 +1,7 @@
 <template>
   <v-app>
     <v-main>
-  <v-container>
-    <v-row class="text-center">
-      <v-col cols="12">
-        <div class="BingoNumber">
-          <p v-text="bingoNumber" />
-        </div>
-      </v-col>
-    </v-row>
-    <v-row class="text-center" justify="center">
-      <v-col
-        cols="12"
-        sm="6"
-      >
-        <v-btn
-          class="ma-1"
-          color="info"
-          @click="Shhow"
-        >
-          確認
-        </v-btn>
-      </v-col>
-    </v-row>
-  </v-container>
+      <router-view />
     </v-main>
   </v-app>
 </template>
