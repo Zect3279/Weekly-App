@@ -22,12 +22,10 @@ export default {
     //
   },
   data: () => ({
-    bingoNumber: '履歴数'
+    //
   }),
   methods: {
-    Shhow () {
-      this.bingoNumber = history.length
-    }
+    //
   },
   watch: {
     //
@@ -36,29 +34,5 @@ export default {
 </script>
 
 <style>
-.BingoNumber{
-  margin:2em 0;
-  position: relative;
-  padding: 0.5em 1.5em;
-  border-top: solid 2px black;
-  border-bottom: solid 2px black;
-}
-.BingoNumber:before, .BingoNumber:after{
-  content: '';
-  position: absolute;
-  top: -10px;
-  width: 2px;
-  height: -webkit-calc(100% + 20px);
-  height: calc(100% + 20px);
-  background-color: black;
-}
-.BingoNumber:before {left: 10px;}
-.BingoNumber:after {right: 10px;}
-.BingoNumber p {
-  margin: 0;
-  padding: 0;
-  font-size: 200px;
-  font-weight: bold;
-}
 
 </style>
