@@ -1,49 +1,68 @@
 <template>
   <v-container>
     <v-row class="text-center">
-      <v-col class="mb-4">
-        <h1 class="display-2 font-weight-bold mt-16 mb-3">
-          WAC
-        </h1>
+      <v-col class="">
+        <p
+          style="font-size: 15vw;"
+          v-text="cardText"
+          class="overflow-x-auto"
+        />
       </v-col>
     </v-row>
-    <v-row justify="center" class="my-5">
-      <v-col
-        class="mb-5"
-        cols="12"
-        xs="12"
-        sm="6"
-        md="3"
-        lg="3"
-        xl="2"
-        v-for="w in wacs"
-        :key="w.index"
-      >
+    <v-dialog
+      v-model="dialog"
+      max-width="500px"
+      persistent
+    >
       <v-card>
-        <v-card-title v-text="w.name" />
-        <v-card-text v-text="w.des" />
+        <v-card-text>
+          <v-textarea
+            label="File name"
+            v-model="changeText"
+            rows="1"
+          />
+
+          <small class="grey--text">* This doesn't actually save.</small>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            text
+            color="primary"
+            @click="Chhange"
+          >
+            Submit
+          </v-btn>
+        </v-card-actions>
       </v-card>
-      </v-col>
-    </v-row>
+    </v-dialog>
   </v-container>
 </template>
 
 <script>
-import projects from '@/common/projects'
-
 export default {
   name: 'Home',
   components: {
     //
   },
   data: () => ({
-    wacs: projects.wac
+    dialog: true,
+    cardText: '',
+    changeText: ''
   }),
   mounted: function () {
     //
   },
   methods: {
-    //
+    Chhange () {
+      if (!this.changeText) {
+        return
+      }
+      this.cardText = this.changeText
+      this.dialog = false
+    }
   }
 }
 </script>

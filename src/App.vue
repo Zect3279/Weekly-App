@@ -1,64 +1,92 @@
 <template>
   <v-app>
     <v-main>
-      <router-view />
+  <v-container>
+    <v-card
+      class="d-flex justify-center"
+      flat
+    >
+      <p
+        style="font-size: 12vw;text-align: center;white-space: pre-wrap;"
+        v-text="cardText"
+      />
+    </v-card>
+    <v-dialog
+      v-model="dialog"
+      persistent
+      max-width="600px"
+    >
+      <v-card>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col
+                cols="12"
+                sm="12"
+              >
+              <v-textarea
+                label="Message"
+                v-model="changeText"
+                rows="1"
+                auto-grow
+              />
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+
+        <v-card-actions class="mt-n10">
+          <v-spacer></v-spacer>
+
+          <v-btn
+            text
+            color="primary"
+            @click="Chhange"
+          >
+            Submit
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+  </v-container>
     </v-main>
+        <v-btn
+          color="primary"
+          outlined
+          fixed
+          fab
+          bottom
+          right
+          @click="dialog = !dialog"
+        >
+          <v-icon>mdi-reload</v-icon>
+        </v-btn>
   </v-app>
 </template>
 
 <script>
-// import { mapState } from 'vuex'
-// const jwt = require('jsonwebtoken')
-
 export default {
-  name: 'Bingo',
-  computed: {
-    // state から
-    // ...mapState(['firstNumber']), // 最初(編集不可)
-    // ...mapState(['lastNumber']), // 最後
-    // ...mapState(['alreadyList']) // 既出リスト
-  },
-  mounted: function () {
+  name: 'Home',
+  components: {
     //
   },
   data: () => ({
-    bingoNumber: '履歴数'
+    dialog: true,
+    cardText: 'hello world',
+    changeText: ''
   }),
-  methods: {
-    Shhow () {
-      this.bingoNumber = history.length
-    }
-  },
-  watch: {
+  mounted: function () {
     //
+  },
+  methods: {
+    Chhange () {
+      if (!this.changeText) {
+        return
+      }
+      this.cardText = this.changeText
+      this.dialog = false
+    }
   }
 }
 </script>
-
-<style>
-.BingoNumber{
-  margin:2em 0;
-  position: relative;
-  padding: 0.5em 1.5em;
-  border-top: solid 2px black;
-  border-bottom: solid 2px black;
-}
-.BingoNumber:before, .BingoNumber:after{
-  content: '';
-  position: absolute;
-  top: -10px;
-  width: 2px;
-  height: -webkit-calc(100% + 20px);
-  height: calc(100% + 20px);
-  background-color: black;
-}
-.BingoNumber:before {left: 10px;}
-.BingoNumber:after {right: 10px;}
-.BingoNumber p {
-  margin: 0;
-  padding: 0;
-  font-size: 200px;
-  font-weight: bold;
-}
-
-</style>
