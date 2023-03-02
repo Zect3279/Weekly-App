@@ -46,8 +46,8 @@ export default {
       index: 8,
       name: 'hash bot',
       des: 'ハッシュタグでチャンネルに転送できるDiscord Bot',
-      link: '',
-//       link: 'https://discord.com/oauth2/authorize?client_id=962254873980719128&permissions=0&scope=bot%20applications.commands'
+      link: ''
+      // link: 'https://discord.com/oauth2/authorize?client_id=962254873980719128&permissions=0&scope=bot%20applications.commands'
     },
     {
       index: 9,
@@ -89,8 +89,8 @@ export default {
       index: 15,
       name: 'af bot',
       des: 'MetamaskにNFTを追加する用のトークンを取ってくる discord bot',
-      link: '',
-//       link: 'https://discord.com/oauth2/authorize?client_id=982579233622728724&permissions=8&scope=bot'
+      link: ''
+      // link: 'https://discord.com/oauth2/authorize?client_id=982579233622728724&permissions=8&scope=bot'
     },
     {
       index: 16,
