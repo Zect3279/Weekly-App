@@ -65,7 +65,7 @@ export default {
   methods: {
     juump (url) {
       console.log(url)
-      if (url.toString().startswith('https://')) {
+      if (String(url).startswith('https://')) {
         window.open(url, '_blank')
       } else {
         window.open(`https://${url}.zscode.net`, '_blank')
