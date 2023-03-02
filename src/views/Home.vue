@@ -65,7 +65,7 @@ export default {
   methods: {
     juump (url) {
       if (url) {
-        window.open(`https://${link}.zscode.net`, '_blank')
+        window.open(`https://${url}.zscode.net`, '_blank')
       } else {
         console.log("no link")
       }
