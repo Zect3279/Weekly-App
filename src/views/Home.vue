@@ -64,6 +64,7 @@ export default {
   },
   methods: {
     juump (url) {
+      console.log(url)
       if (url.toString().startswith('https://')) {
         window.open(url, '_blank')
       } else {
