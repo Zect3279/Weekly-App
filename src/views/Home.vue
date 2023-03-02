@@ -64,11 +64,11 @@ export default {
   },
   methods: {
     juump (url) {
-      console.log(typeof url)
-      if (url.startswith('https')) {
+      const link = url
+      if (link.startswith('https')) {
         window.open(url, '_blank')
       } else {
-        window.open(`https://${url}.zscode.net`, '_blank')
+        window.open(`https://${link}.zscode.net`, '_blank')
       }
     }
   }
