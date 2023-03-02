@@ -67,7 +67,7 @@ export default {
       if (url) {
         window.open(`https://${url}.zscode.net`, '_blank')
       } else {
-        console.log("no link")
+        console.log('no link')
       }
     }
   }
